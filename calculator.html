@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>حاسبة المباني</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    function calculate() {
+      let area = parseFloat(document.getElementById('area').value) || 0;
+      let ac_units = parseFloat(document.getElementById('ac_units').value) || 0;
+      let ac_hours = parseFloat(document.getElementById('ac_hours').value) || 0;
+      let ac_consumption = parseFloat(document.getElementById('ac_consumption').value) || 0;
+      let light_units = parseFloat(document.getElementById('light_units').value) || 0;
+      let light_hours = parseFloat(document.getElementById('light_hours').value) || 0;
+      let light_consumption = parseFloat(document.getElementById('light_consumption').value) || 0;
+      let people = parseFloat(document.getElementById('people').value) || 0;
+      let other_devices = parseFloat(document.getElementById('other_devices').value) || 0;
+
+      let annual_ac = ac_units * ac_hours * ac_consumption * 365;
+      let annual_light = light_units * light_hours * light_consumption * 365;
+      let annual_other = other_devices * 365;
+      let total = annual_ac + annual_light + annual_other;
+      let density = total / (area || 1);
+
+      let level = "D";
+      if (density < 50) level = "A";
+      else if (density < 100) level = "B";
+      else if (density < 150) level = "C";
+
+      document.getElementById('result').innerHTML = `
+        <p>استهلاك التكييف السنوي: ${annual_ac.toFixed(2)} kWh</p>
+        <p>استهلاك الإنارة السنوي: ${annual_light.toFixed(2)} kWh</p>
+        <p>استهلاك الأجهزة الأخرى السنوي: ${annual_other.toFixed(2)} kWh</p>
+        <p>الاستهلاك الكلي السنوي: ${total.toFixed(2)} kWh</p>
+        <p>كثافة استهلاك الطاقة: ${density.toFixed(2)} kWh/m²</p>
+        <h3>التصنيف: ${level}</h3>
+      `;
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>حاسبة كفاءة الطاقة للمباني السكنية</h1>
+  </header>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="info.html">معلومات</a>
+    <a href="calculator.html">حاسبة المباني</a>
+    <a href="device.html">حاسبة الأجهزة</a>
+  </nav>
+  <div class="container">
+    <h2>أدخل بياناتك:</h2>
+    <label>مساحة المبنى (م²): <input type="number" id="area"></label><br><br>
+    <label>عدد أجهزة التكييف: <input type="number" id="ac_units"></label><br><br>
+    <label>ساعات تشغيل التكييف يومياً: <input type="number" id="ac_hours"></label><br><br>
+    <label>استهلاك التكييف (kWh): <input type="number" id="ac_consumption"></label><br><br>
+    <label>عدد أجهزة الإنارة: <input type="number" id="light_units"></label><br><br>
+    <label>ساعات تشغيل الإنارة يومياً: <input type="number" id="light_hours"></label><br><br>
+    <label>استهلاك الإنارة (kWh): <input type="number" id="light_consumption"></label><br><br>
+    <label>عدد السكان: <input type="number" id="people"></label><br><br>
+    <label>الأجهزة الأخرى (kWh/يوم): <input type="number" id="other_devices"></label><br><br>
+    <button onclick="calculate()">احسب</button>
+    <div id="result" style="margin-top:20px;"></div>
+  </div>
+  <footer>
+    <p>© 2025 وزارة الكهرباء والماء والطاقة المتجددة - الكويت (تجريبي)</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>حاسبة الأجهزة</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    function calcSaving() {
+      let old = parseFloat(document.getElementById('old').value) || 0;
+      let neu = parseFloat(document.getElementById('new').value) || 0;
+      let hours = parseFloat(document.getElementById('hours').value) || 0;
+      let tariff = parseFloat(document.getElementById('tariff').value) || 0.03; // سعر الكيلوواط
+
+      let annual_old = old * hours * 365;
+      let annual_new = neu * hours * 365;
+      let saving_kwh = annual_old - annual_new;
+      let saving_money = saving_kwh * tariff;
+
+      document.getElementById('saving').innerHTML = `
+        <p>التوفير السنوي: ${saving_kwh.toFixed(2)} kWh (${saving_money.toFixed(2)} دينار)</p>
+        <p>خلال 5 سنوات: ${(saving_kwh*5).toFixed(2)} kWh (${(saving_money*5).toFixed(2)} دينار)</p>
+        <p>خلال 10 سنوات: ${(saving_kwh*10).toFixed(2)} kWh (${(saving_money*10).toFixed(2)} دينار)</p>
+      `;
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>حاسبة التوفير عند استبدال الأجهزة</h1>
+  </header>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="info.html">معلومات</a>
+    <a href="calculator.html">حاسبة المباني</a>
+    <a href="device.html">حاسبة الأجهزة</a>
+  </nav>
+  <div class="container">
+    <h2>أدخل بيانات الجهاز:</h2>
+    <label>استهلاك الجهاز القديم (kWh): <input type="number" id="old"></label><br><br>
+    <label>استهلاك الجهاز الجديد (kWh): <input type="number" id="new"></label><br><br>
+    <label>عدد ساعات التشغيل يومياً: <input type="number" id="hours"></label><br><br>
+    <label>تعرفة الكهرباء (دينار لكل kWh): <input type="number" id="tariff" value="0.03"></label><br><br>
+    <button onclick="calcSaving()">احسب التوفير</button>
+    <div id="saving" style="margin-top:20px;"></div>
+  </div>
+  <footer>
+    <p>© 2025 وزارة الكهرباء والماء والطاقة المتجددة - الكويت (تجريبي)</p>
+  </footer>
+</body>
+</html>
